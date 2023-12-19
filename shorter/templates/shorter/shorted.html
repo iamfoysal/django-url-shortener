@@ -94,7 +94,7 @@ p{
     <div class="card">
       <p class="sub-title">Shortened URL</p>
         {% if url_obj %}
-        <p>Shortened URL: <a href="{{ request.scheme }}://{{ request.get_host }}/{{ url_obj.short_code }}">{{ request.scheme }}://{{ request.get_host }}/{{ url_obj.short_code }}</a></p>
+        <p>Shortened URL: <a target="_blank" href="{{ request.scheme }}://{{ request.get_host }}/{{ url_obj.short_code }}">{{ request.scheme }}://{{ request.get_host }}/{{ url_obj.short_code }}</a></p>
         <p>Total Clicks: {{ url_obj.clicks }}</p>
         <p>Last Clicked: {{ url_obj.last_click }}</p>
         
@@ -105,4 +105,6 @@ p{
 </body>
 </html>
 
+
+<!-- when i click shoted url its should be open new tab -->
 

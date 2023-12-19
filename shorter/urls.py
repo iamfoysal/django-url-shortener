@@ -7,6 +7,6 @@ app_name = 'shorter'
 
 urlpatterns = [
     path('', index, name='index'),
-    # path('<str:short_code>/', redirect_original, name='redirect_original'),
+    path('<str:short_code>/', redirect_original, name='redirect_original'),
     path('shorted/<str:short_code>/', shorted, name='shorted'),
 ]

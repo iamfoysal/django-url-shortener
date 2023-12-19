@@ -29,10 +29,9 @@ def index(request):
         original_url = request.POST['original_url']
         short_code = generate_short_code()
         user_ip = request.META.get('HTTP_X_FORWARDED_FOR', request.META.get('REMOTE_ADDR', ''))
-        print("User IP: ",user_ip)
         country = get_country_from_ip(user_ip)
-        
-        url_obj, created = Url.objects.get_or_create(original_url=original_url, short_code=short_code, user=request.user, location=country)
+        user = request.user if request.user.is_authenticated else None
+        url_obj, created = Url.objects.get_or_create(original_url=original_url, short_code=short_code, user=user, location=country)
         # return render(request, 'shorter/shorted.html', {'url_obj': url_obj})
         return redirect(reverse('shorter:shorted', kwargs={'short_code': url_obj.short_code}))
 
@@ -57,4 +56,8 @@ def list_urls(request):
 
 def shorted(request, short_code):
     url_obj = Url.objects.get(short_code=short_code)
+    url_obj = Url.objects.get(short_code=short_code)
+    url_obj.clicks += 1
+    url_obj.last_click = timezone.now()
+    url_obj.save()
     return render(request, 'shorter/shorted.html', {'url_obj': url_obj})
